@@ -14,7 +14,7 @@ function convertData(cityName, viewers) {
 
     const csv = await fetch('cities/worldcities_clean.csv')
         .then(resp => resp.text());
-    const data = CSVToArray(csv, ',', true);
+    const data = CSVToArray(csv, ',', true).reverse();
     const cities = Object.fromEntries(data.map(line => [
         line[0],
         {
