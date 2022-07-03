@@ -94,6 +94,7 @@ function indexOfCity(data, cityName) {
 
     const option = {
         tooltip: {
+            triggerOn: 'click',
             formatter: (params) => {
                 return `${params.value[2]}: ${params.value[3]}`;
             }
@@ -108,13 +109,13 @@ function indexOfCity(data, cityName) {
         },
         geo: {
             map: 'world',
-            roam: true,
+            roam: false,
             label: {
                 emphasis: {
                     show: false
                 }
             },
-            silent: true,
+            silent: false,
             itemStyle: {
                 normal: {
                     areaColor: '#323c48',
