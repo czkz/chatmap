@@ -19,6 +19,12 @@ function indexOfCity(data, cityName) {
     return -1;
 }
 
+function randomCityName(n = Infinity) {
+    const ck = Object.keys(cities);
+    const i = Math.floor(Math.random() * Math.min(n, ck.length));
+    return ck[i];
+}
+
 (async function() {
 
     const csv = await fetch('cities/worldcities_clean.csv')
@@ -88,13 +94,25 @@ function indexOfCity(data, cityName) {
         untipId = setTimeout(
             () => myChart.dispatchAction({type: 'hideTip'}),
             1500
-        )
-
+        );
     };
+
+    const addRandomCities = () => {
+        addPoint(randomCityName(10));
+        setTimeout(addRandomCities, Math.random() * 3000);
+    };
+    addRandomCities();
 
     const option = {
         tooltip: {
             triggerOn: 'click',
+            backgroundColor: '#0000',
+            borderColor: '#0000',
+            padding: 0,
+            position: 'top',
+            textStyle: {
+                color: '#ffffff'
+            },
             formatter: (params) => {
                 return `${params.value[2]}: ${params.value[3]}`;
             }
