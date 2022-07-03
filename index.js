@@ -10,6 +10,15 @@ function convertData(cityName, viewers) {
     return [cityInfo.lat, cityInfo.lng, cityName, viewers];
 }
 
+function indexOfCity(data, cityName) {
+    for (const i in data) {
+        if (data[i][2] == cityName) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 (async function() {
 
     const csv = await fetch('cities/worldcities_clean.csv')
@@ -35,7 +44,7 @@ function convertData(cityName, viewers) {
         }
     );
 
-    window.rawData = Object.create(null);
+    window.rawData = [];
     window.nDataPoints = 0;
 
     let untipId = null;
@@ -47,11 +56,14 @@ function convertData(cityName, viewers) {
             return;
         }
 
-        if (rawData[cityName] == undefined) {
-            rawData[cityName] = 0;
+        const idx = indexOfCity(rawData, cityName);
+        let viewers = 0;
+        if (idx != -1) {
+            viewers = rawData[idx][3];
+            rawData.splice(idx, 1);
         }
-        rawData[cityName] += 1;
-        nDataPoints += 1;
+        viewers += 1;
+        rawData.push(convertData(cityName, viewers));
 
         // myChart.appendData({
         //     seriesIndex: 0,
@@ -59,7 +71,7 @@ function convertData(cityName, viewers) {
         // });
         myChart.setOption({
             dataset: {
-                source: Object.entries(rawData).map(e => convertData(...e))
+                source: rawData
             }
         });
 
@@ -71,7 +83,7 @@ function convertData(cityName, viewers) {
         myChart.dispatchAction({
             type: 'showTip',
             seriesIndex: 0,
-            dataIndex: 0
+            dataIndex: rawData.length - 1
         });
         untipId = setTimeout(
             () => myChart.dispatchAction({type: 'hideTip'}),
