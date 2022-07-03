@@ -5,13 +5,9 @@ const CSVToArray = (data, delimiter = ',', omitFirstRow = false) => data
     .split('\n')
     .map(v => v.split(delimiter));
 
-function convertData(inp) {
-    const ret = [];
-    for (const [cityName, viewers] of Object.entries(inp)) {
-        const cityInfo = cities[cityName];
-        ret.push([cityInfo.lng, cityInfo.lat, cityName, viewers]);
-    }
-    return ret;
+function convertData(cityName, viewers) {
+    const cityInfo = cities[cityName];
+    return [cityInfo.lat, cityInfo.lng, cityName, viewers];
 }
 
 (async function() {
@@ -30,7 +26,7 @@ function convertData(inp) {
     ]));
     window.cities = cities;
 
-    const myChart = echarts.init(
+    window.myChart = echarts.init(
         document.getElementById('chart-container'),
         null,
         {
@@ -40,6 +36,9 @@ function convertData(inp) {
     );
 
     window.rawData = Object.create(null);
+    window.nDataPoints = 0;
+
+    let untipId = null;
 
     window.addPoint = function(cityName) {
         const info = cities[cityName];
@@ -52,15 +51,41 @@ function convertData(inp) {
             rawData[cityName] = 0;
         }
         rawData[cityName] += 1;
+        nDataPoints += 1;
 
-        myChart.appendData({
-            seriesIndex: 0,
-            data: convertData(rawData)
+        // myChart.appendData({
+        //     seriesIndex: 0,
+        //     data: [convertData(cityName, rawData[cityName])]
+        // });
+        myChart.setOption({
+            dataset: {
+                source: Object.entries(rawData).map(e => convertData(...e))
+            }
         });
+
+        if (untipId != null) {
+            // myChart.dispatchAction({type: 'hideTip'});
+            clearTimeout(untipId);
+            untipId = null;
+        }
+        myChart.dispatchAction({
+            type: 'showTip',
+            seriesIndex: 0,
+            dataIndex: 0
+        });
+        untipId = setTimeout(
+            () => myChart.dispatchAction({type: 'hideTip'}),
+            1500
+        )
+
     };
 
     const option = {
-        tooltip: {},
+        tooltip: {
+            formatter: (params) => {
+                return `${params.value[2]}: ${params.value[3]}`;
+            }
+        },
         backgroundColor: '#000',
         title: {
             text: '10000000 GPS Points',
@@ -88,6 +113,10 @@ function convertData(inp) {
                 }
             }
         },
+        dataset: {
+            dimensions: ['lat', 'lng', 'city', 'viewers'],
+            source: []
+        },
         series: {
             type: 'effectScatter',
             coordinateSystem: 'geo',
@@ -98,7 +127,13 @@ function convertData(inp) {
             itemStyle: {
                 color: '#F6F6F6'
             },
-            data: []
+            encode: {
+                lat: 'lat',
+                lng: 'lng',
+                tooltip: ['city', 'viewers'],
+                itemId: 'city',
+                itemGroupId: 'city',
+            },
         }
     };
     myChart.setOption(option);
