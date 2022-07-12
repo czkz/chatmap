@@ -2,12 +2,13 @@
 const cities = require('./cities');
 const ViewerData = require('./viewerData')
 const chart_mod = require('./chart');
+const TooltipManager = require('./tooltip');
 
 
 const viewerData = new ViewerData(cities);
 const chart = chart_mod.create();
+const tip = new TooltipManager(chart);
 
-let untipId = null;
 function addPoint(cityName) {
     if (!cities.exists(cityName)) {
         console.log(`Undefined city "${cityName}"!`);
@@ -22,21 +23,8 @@ function addPoint(cityName) {
         }
     });
 
-    if (untipId != null) {
-        // chart.dispatchAction({type: 'hideTip'});
-        clearTimeout(untipId);
-        untipId = null;
-    }
-    chart.dispatchAction({
-        type: 'showTip',
-        seriesIndex: 0,
-        dataIndex: viewerData.lastAddedIndex
-    });
-    untipId = setTimeout(
-        () => chart.dispatchAction({type: 'hideTip'}),
-        1500
-    );
-};
+    tip.show(viewerData.lastAddedIndex);
+}
 
 (async function main() {
 
