@@ -53,20 +53,18 @@ async function init() {
         geo: {
             map: 'world',
             roam: false,
-            label: {
-                emphasis: {
+            emphasis: {
+                label: {
                     show: false
+                },
+                itemStyle: {
+                    areaColor: '#2a333d'
                 }
             },
             silent: true,
             itemStyle: {
-                normal: {
-                    areaColor: '#323c48',
-                    borderColor: '#111'
-                },
-                emphasis: {
-                    areaColor: '#2a333d'
-                }
+                areaColor: '#323c48',
+                borderColor: '#111'
             }
         },
         dataset: {
@@ -107,10 +105,6 @@ function addPoint(cityName) {
 
     viewerData.addViewer(cityName);
 
-    // myChart.appendData({
-    //     seriesIndex: 0,
-    //     data: [convertData(cityName, rawData[cityName])]
-    // });
     myChart.setOption({
         dataset: {
             source: viewerData.generate()
