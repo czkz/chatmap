@@ -1,14 +1,12 @@
 'use strict';
-const cities = require('./cities');
+const CityData = require('./CityData');
 const Part3 = require('./part3');
 
 
 (async function main() {
 
-    await cities.load();
-
-    const part3 = new Part3();
-    await part3.init();
+    const cities = await new CityData();
+    const part3 = await new Part3();
 
     const addRandomCities = () => {
         part3.addViewer(cities.randomCity(5).name);

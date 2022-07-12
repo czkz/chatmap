@@ -1,33 +1,29 @@
 'use strict';
-const cities = require('./cities');
-const ViewerData = require('./viewerData')
+const CityData = require('./CityData');
+const ViewerData = require('./ViewerData')
 const chart_mod = require('./chart');
 const TooltipManager = require('./tooltip');
 
 
 module.exports = class {
 
+    #cityData = null;
     #viewerData = null;
     #chart = null;
     #tip = null;
 
-    async init() {
-        this.#viewerData = new ViewerData(cities);
-        this.#chart = chart_mod.create();
-        this.#tip = new TooltipManager(this.#chart);
-
-        await cities.load();
-
-        const addRandomCities = () => {
-            addPoint(cities.randomCity(5).name);
-            setTimeout(addRandomCities, Math.random() * 3000);
-        };
-        setTimeout(addRandomCities, 2000);
-
+    constructor() {
+        return (async () => {
+            this.#cityData = await new CityData();
+            this.#viewerData = new ViewerData(this.#cityData);
+            this.#chart = chart_mod.create();
+            this.#tip = new TooltipManager(this.#chart);
+            return this;
+        })();
     }
 
     addViewer(cityName) {
-        if (!cities.exists(cityName)) {
+        if (!this.#cityData.exists(cityName)) {
             console.log(`Undefined city "${cityName}"!`);
             return;
         }
