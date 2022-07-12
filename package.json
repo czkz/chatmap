@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "echarts": "^5.3.3",
+    "natural": "^5.2.2"
+  }
+}

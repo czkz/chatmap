@@ -21,6 +21,7 @@ function indexOfCity(data, cityName) {
 
 function randomCityName(n = Infinity) {
     const ck = Object.keys(cities);
+    ck.sort((a, b) => cities[b].population - cities[a].population);
     const i = Math.floor(Math.random() * Math.min(n, ck.length));
     return ck[i];
 }
@@ -40,6 +41,9 @@ function randomCityName(n = Infinity) {
         }
     ]));
     window.cities = cities;
+
+    const echarts = require('echarts');
+    const world = require('./world.min.js');
 
     window.myChart = echarts.init(
         document.getElementById('chart-container'),
@@ -98,10 +102,10 @@ function randomCityName(n = Infinity) {
     };
 
     const addRandomCities = () => {
-        addPoint(randomCityName(10));
+        addPoint(randomCityName(5));
         setTimeout(addRandomCities, Math.random() * 3000);
     };
-    addRandomCities();
+    setTimeout(addRandomCities, 2000);
 
     const option = {
         tooltip: {
@@ -118,13 +122,13 @@ function randomCityName(n = Infinity) {
             }
         },
         backgroundColor: '#000',
-        title: {
-            text: '10000000 GPS Points',
-            left: 'center',
-            textStyle: {
-                color: '#fff'
-            }
-        },
+        // title: {
+        //     text: 'Some title here',
+        //     left: 'center',
+        //     textStyle: {
+        //         color: '#fff'
+        //     }
+        // },
         geo: {
             map: 'world',
             roam: false,
@@ -133,7 +137,7 @@ function randomCityName(n = Infinity) {
                     show: false
                 }
             },
-            silent: false,
+            silent: true,
             itemStyle: {
                 normal: {
                     areaColor: '#323c48',
@@ -153,7 +157,7 @@ function randomCityName(n = Infinity) {
             coordinateSystem: 'geo',
             geoIndex: 0,
             symbolSize: function (params) {
-                return params[3] + 5;
+                return (params[3] - 1) * 1.5 + 5;
             },
             itemStyle: {
                 color: '#F6F6F6'
@@ -169,7 +173,7 @@ function randomCityName(n = Infinity) {
     };
     myChart.setOption(option);
 
-    addPoint('Moscow');
+    // addPoint('Moscow');
 
     window.addEventListener('resize', myChart.resize);
 })();
