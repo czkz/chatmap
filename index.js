@@ -5,6 +5,20 @@ const CSVToArray = (data, delimiter = ',', omitFirstRow = false) => data
     .split('\n')
     .map(v => v.split(delimiter));
 
+const CSVToJSON = (data, delimiter = ',') => {
+  const titles = data.slice(0, data.indexOf('\n')).split(delimiter);
+  return data
+    .slice(data.indexOf('\n') + 1)
+    .split('\n')
+    .map(v => {
+      const values = v.split(delimiter);
+      return titles.reduce(
+        (obj, title, index) => ((obj[title] = values[index]), obj),
+        {}
+      );
+    });
+};
+
 function convertData(cityName, viewers) {
     const cityInfo = cities[cityName];
     return [cityInfo.lat, cityInfo.lng, cityName, viewers];
@@ -114,16 +128,9 @@ async function init() {
 async function initData() {
     const csv = await fetch('cities/worldcities_clean.csv')
         .then(resp => resp.text());
-    const data = CSVToArray(csv, ',', true).reverse();
-    const cities = Object.fromEntries(data.map(line => [
-        line[0],
-        {
-            lat: line[1],
-            lng: line[2],
-            country: line[3],
-            population: line[4],
-        }
-    ]));
+    const data = CSVToJSON(csv);
+    console.log(data);
+    const cities = Object.fromEntries(data.map(e => [e.city, e]));
     window.cities = cities;
 }
 
