@@ -1,27 +1,9 @@
 'use strict';
-
-const CSVToArray = (data, delimiter = ',', omitFirstRow = false) => data
-    .slice(omitFirstRow ? data.indexOf('\n') + 1 : 0)
-    .split('\n')
-    .map(v => v.split(delimiter));
-
-const CSVToJSON = (data, delimiter = ',') => {
-  const titles = data.slice(0, data.indexOf('\n')).split(delimiter);
-  return data
-    .slice(data.indexOf('\n') + 1)
-    .split('\n')
-    .map(v => {
-      const values = v.split(delimiter);
-      return titles.reduce(
-        (obj, title, index) => ((obj[title] = values[index]), obj),
-        {}
-      );
-    });
-};
+window. cities = require('./cities');
 
 function convertData(cityName, viewers) {
-    const cityInfo = cities[cityName];
-    return [cityInfo.lat, cityInfo.lng, cityName, viewers];
+    const cityInfo = cities.getCityByName(cityName);
+    return [cityInfo.lat, cityInfo.lng, cityInfo.city, viewers];
 }
 
 function indexOfCity(data, cityName) {
@@ -34,10 +16,8 @@ function indexOfCity(data, cityName) {
 }
 
 function randomCityName(n = Infinity) {
-    const ck = Object.keys(cities);
-    ck.sort((a, b) => cities[b].population - cities[a].population);
-    const i = Math.floor(Math.random() * Math.min(n, ck.length));
-    return ck[i];
+    const i = Math.floor(Math.random() * Math.min(n, cities.data.length));
+    return cities.data[i].city;
 }
 
 
@@ -125,22 +105,13 @@ async function init() {
     window.addEventListener('resize', myChart.resize);
 }
 
-async function initData() {
-    const csv = await fetch('cities/worldcities_clean.csv')
-        .then(resp => resp.text());
-    const data = CSVToJSON(csv);
-    console.log(data);
-    const cities = Object.fromEntries(data.map(e => [e.city, e]));
-    window.cities = cities;
-}
-
 window.rawData = [];
 window.nDataPoints = 0;
 let untipId = null;
 function addPoint(cityName) {
-    const info = cities[cityName];
+    const info = cities.getCityByName(cityName);
     if (info == undefined) {
-        console.log('Undefined city!');
+        console.log(`Undefined city "${cityName}"!`);
         return;
     }
 
@@ -181,7 +152,7 @@ function addPoint(cityName) {
 
 (async function main() {
 
-    await initData();
+    await cities.load();
     await init();
 
     const addRandomCities = () => {
