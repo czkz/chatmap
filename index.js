@@ -1,23 +1,15 @@
 'use strict';
 window. cities = require('./cities');
+const ViewerData = require('./viewerData')
 
 function convertData(cityName, viewers) {
     const cityInfo = cities.getCityByName(cityName);
-    return [cityInfo.lat, cityInfo.lng, cityInfo.city, viewers];
-}
-
-function indexOfCity(data, cityName) {
-    for (const i in data) {
-        if (data[i][2] == cityName) {
-            return i;
-        }
-    }
-    return -1;
+    return [cityInfo.lat, cityInfo.lng, cityInfo.name, viewers];
 }
 
 function randomCityName(n = Infinity) {
     const i = Math.floor(Math.random() * Math.min(n, cities.data.length));
-    return cities.data[i].city;
+    return cities.data[i].name;
 }
 
 
@@ -105,24 +97,15 @@ async function init() {
     window.addEventListener('resize', myChart.resize);
 }
 
-window.rawData = [];
-window.nDataPoints = 0;
+const viewerData = new ViewerData(cities);
 let untipId = null;
 function addPoint(cityName) {
-    const info = cities.getCityByName(cityName);
-    if (info == undefined) {
+    if (!cities.exists(cityName)) {
         console.log(`Undefined city "${cityName}"!`);
         return;
     }
 
-    const idx = indexOfCity(rawData, cityName);
-    let viewers = 0;
-    if (idx != -1) {
-        viewers = rawData[idx][3];
-        rawData.splice(idx, 1);
-    }
-    viewers += 1;
-    rawData.push(convertData(cityName, viewers));
+    viewerData.addViewer(cityName);
 
     // myChart.appendData({
     //     seriesIndex: 0,
@@ -130,7 +113,7 @@ function addPoint(cityName) {
     // });
     myChart.setOption({
         dataset: {
-            source: rawData
+            source: viewerData.generate()
         }
     });
 
@@ -142,7 +125,7 @@ function addPoint(cityName) {
     myChart.dispatchAction({
         type: 'showTip',
         seriesIndex: 0,
-        dataIndex: rawData.length - 1
+        dataIndex: viewerData.lastAddedIndex
     });
     untipId = setTimeout(
         () => myChart.dispatchAction({type: 'hideTip'}),

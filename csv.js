@@ -1,3 +1,5 @@
+'use strict';
+
 const toJSON = (data, delimiter = ',') => {
   const titles = data.slice(0, data.indexOf('\n')).split(delimiter);
   return data
