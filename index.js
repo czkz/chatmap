@@ -1,20 +1,6 @@
 'use strict';
-window. cities = require('./cities');
+const cities = require('./cities');
 const ViewerData = require('./viewerData')
-
-function convertData(cityName, viewers) {
-    const cityInfo = cities.getCityByName(cityName);
-    return [cityInfo.lat, cityInfo.lng, cityInfo.name, viewers];
-}
-
-function randomCityName(n = Infinity) {
-    const i = Math.floor(Math.random() * Math.min(n, cities.data.length));
-    return cities.data[i].name;
-}
-
-
-
-
 const echarts = require('echarts');
 const world = require('./world.min.js');
 
@@ -133,7 +119,7 @@ function addPoint(cityName) {
     await init();
 
     const addRandomCities = () => {
-        addPoint(randomCityName(5));
+        addPoint(cities.randomCity(5).name);
         setTimeout(addRandomCities, Math.random() * 3000);
     };
     setTimeout(addRandomCities, 2000);

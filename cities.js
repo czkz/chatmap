@@ -24,5 +24,11 @@ module.exports = {
 
     exists(cityName) {
         return this.getCityByName(cityName) !== null;
+    },
+
+    randomCity(n = Infinity) {
+        const i = Math.floor(Math.random() * Math.min(n, this.data.length));
+        return this.data[i];
     }
+
 };
