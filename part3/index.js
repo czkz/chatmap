@@ -1,5 +1,5 @@
 'use strict';
-const CityData = require('./CityData');
+const CityData = require('../CityData');
 const ViewerData = require('./ViewerData')
 const chart_mod = require('./chart');
 const TooltipManager = require('./tooltip');
