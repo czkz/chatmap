@@ -26,25 +26,13 @@ function randomCityName(n = Infinity) {
     return ck[i];
 }
 
-(async function() {
 
-    const csv = await fetch('cities/worldcities_clean.csv')
-        .then(resp => resp.text());
-    const data = CSVToArray(csv, ',', true).reverse();
-    const cities = Object.fromEntries(data.map(line => [
-        line[0],
-        {
-            lat: line[1],
-            lng: line[2],
-            country: line[3],
-            population: line[4],
-        }
-    ]));
-    window.cities = cities;
 
-    const echarts = require('echarts');
-    const world = require('./world.min.js');
 
+const echarts = require('echarts');
+const world = require('./world.min.js');
+
+async function init() {
     window.myChart = echarts.init(
         document.getElementById('chart-container'),
         null,
@@ -53,59 +41,6 @@ function randomCityName(n = Infinity) {
             useDirtyRect: false
         }
     );
-
-    window.rawData = [];
-    window.nDataPoints = 0;
-
-    let untipId = null;
-
-    window.addPoint = function(cityName) {
-        const info = cities[cityName];
-        if (info == undefined) {
-            console.log('Undefined city!');
-            return;
-        }
-
-        const idx = indexOfCity(rawData, cityName);
-        let viewers = 0;
-        if (idx != -1) {
-            viewers = rawData[idx][3];
-            rawData.splice(idx, 1);
-        }
-        viewers += 1;
-        rawData.push(convertData(cityName, viewers));
-
-        // myChart.appendData({
-        //     seriesIndex: 0,
-        //     data: [convertData(cityName, rawData[cityName])]
-        // });
-        myChart.setOption({
-            dataset: {
-                source: rawData
-            }
-        });
-
-        if (untipId != null) {
-            // myChart.dispatchAction({type: 'hideTip'});
-            clearTimeout(untipId);
-            untipId = null;
-        }
-        myChart.dispatchAction({
-            type: 'showTip',
-            seriesIndex: 0,
-            dataIndex: rawData.length - 1
-        });
-        untipId = setTimeout(
-            () => myChart.dispatchAction({type: 'hideTip'}),
-            1500
-        );
-    };
-
-    const addRandomCities = () => {
-        addPoint(randomCityName(5));
-        setTimeout(addRandomCities, Math.random() * 3000);
-    };
-    setTimeout(addRandomCities, 2000);
 
     const option = {
         tooltip: {
@@ -173,7 +108,79 @@ function randomCityName(n = Infinity) {
     };
     myChart.setOption(option);
 
-    // addPoint('Moscow');
-
     window.addEventListener('resize', myChart.resize);
+}
+
+async function initData() {
+    const csv = await fetch('cities/worldcities_clean.csv')
+        .then(resp => resp.text());
+    const data = CSVToArray(csv, ',', true).reverse();
+    const cities = Object.fromEntries(data.map(line => [
+        line[0],
+        {
+            lat: line[1],
+            lng: line[2],
+            country: line[3],
+            population: line[4],
+        }
+    ]));
+    window.cities = cities;
+}
+
+window.rawData = [];
+window.nDataPoints = 0;
+let untipId = null;
+function addPoint(cityName) {
+    const info = cities[cityName];
+    if (info == undefined) {
+        console.log('Undefined city!');
+        return;
+    }
+
+    const idx = indexOfCity(rawData, cityName);
+    let viewers = 0;
+    if (idx != -1) {
+        viewers = rawData[idx][3];
+        rawData.splice(idx, 1);
+    }
+    viewers += 1;
+    rawData.push(convertData(cityName, viewers));
+
+    // myChart.appendData({
+    //     seriesIndex: 0,
+    //     data: [convertData(cityName, rawData[cityName])]
+    // });
+    myChart.setOption({
+        dataset: {
+            source: rawData
+        }
+    });
+
+    if (untipId != null) {
+        // myChart.dispatchAction({type: 'hideTip'});
+        clearTimeout(untipId);
+        untipId = null;
+    }
+    myChart.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: rawData.length - 1
+    });
+    untipId = setTimeout(
+        () => myChart.dispatchAction({type: 'hideTip'}),
+        1500
+    );
+};
+
+(async function main() {
+
+    await initData();
+    await init();
+
+    const addRandomCities = () => {
+        addPoint(randomCityName(5));
+        setTimeout(addRandomCities, Math.random() * 3000);
+    };
+    setTimeout(addRandomCities, 2000);
+
 })();
