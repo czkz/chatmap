@@ -6,21 +6,26 @@ let sharedData = null;
 module.exports = class {
     data = null;
 
-    constructor() {
+    constructor(limit = Infinity) {
         return (async () => {
             if (sharedData === null) {
-                const csv = await fetch('cities/worldcities_clean.csv')
+                const csv = await fetch('cities/worldcities.csv')
                     .then(resp => resp.text());
                 sharedData = csvToJSON(csv);
                 sharedData.sort((a, b) => b.population - a.population);
             }
-            this.data = sharedData;
+            // Trim to limit but keep all Russian cities
+            this.data = sharedData.filter((e, i) => i < limit || e.country == 'Russia');
             return this;
         })();
     }
 
     getCityByName(name) {
         return this.data.find(e => e.name == name);
+    }
+
+    getCityByNameRu(nameRu) {
+        return this.data.find(e => e.name_ru == name);
     }
 
     exists(cityName) {
