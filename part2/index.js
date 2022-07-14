@@ -2,24 +2,37 @@
 const natural = require('natural');
 const CityData = require('../CityData');
 
-function toWords(str) {
-    return natural.PorterStemmerRu.tokenizeAndStem(str);
+const tokenizer = new natural.AggressiveTokenizerRu();
+
+function tokenize(text) {
+    return tokenizer.tokenize(text);
 }
 
-function stem(str) {
-    return toWords(str)[0];
+function stem(word) {
+    return natural.PorterStemmerRu.stem(word);
+}
+
+function startsWithCapital(word) {
+    return word[0] === word[0].toUpperCase();
+}
+
+function nameTokens(text) {
+    return tokenize(text).filter(startsWithCapital).map(stem);
 }
 
 function getToken(str) {
-    const words = toWords(str);
+    const words = nameTokens(str);
     for (const w of words.reverse()) {
-        if (w == stem('область')) { continue; }
-        if (w == stem('край'))    { continue; }
-        if (w == stem('сити'))    { continue; }
-        if (w == stem('city'))    { continue; }
-        if (w == stem('страна'))  { continue; }
-        if (w == stem('город'))   { continue; }
-        if (w.length <= 2)        { continue; }
+        if (w == stem('область'))  { continue; }
+        if (w == stem('край'))     { continue; }
+        if (w == stem('сити'))     { continue; }
+        if (w == stem('city'))     { continue; }
+        if (w == stem('страна'))   { continue; }
+        if (w == stem('город'))    { continue; }
+        if (w == stem('district')) { continue; }
+        if (w == stem('район'))    { continue; }
+        if (w == stem('округ'))    { continue; }
+        if (w.length <= 2)         { continue; }
         return w;
     }
 }
@@ -52,7 +65,7 @@ module.exports = class {
     }
 
     parseMsg(msg) {
-        const words = toWords(msg).reverse();
+        const words = nameTokens(msg).reverse();
         for (const word of words) {
             const city = this.#dict[word];
             if (city !== undefined) {
