@@ -13,6 +13,7 @@ function getToken(str) {
         if (w == 'край') { continue; }
         if (w == 'сити') { continue; }
         if (w == 'city') { continue; }
+        if (w.length <= 2) { continue; }
         return w;
     }
 }
@@ -21,15 +22,19 @@ module.exports = class {
 
     #dict = Object.create(null);
 
-    constructor(limit = Infinity) {
+    constructor() {
         return (async () => {
-            const cityData = await new CityData(limit);
+            const cityData = await new CityData();
             console.log(cityData);
 
-            cityData.data.forEach(city => {
+            // Reverse so cities with higher population
+            // overwrite cities with lower population
+            cityData.data.slice().reverse().forEach(city => {
                 this.#dict[getToken(city.name_ru)] = city.name;
                 this.#dict[getToken(city.name)] = city.name;
             });
+            delete this.#dict[undefined];
+            delete this.#dict[null];
             return this;
         })();
     }

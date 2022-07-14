@@ -8,7 +8,7 @@ const Part3 = require('./part3');
 (async function main() {
 
     window. part1 = new Part1();
-    window. part2 = await new Part2(500);
+    window. part2 = await new Part2();
     window. part3 = await new Part3();
 
     part1.onNewMessages = function(msgs) {

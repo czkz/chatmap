@@ -6,7 +6,7 @@ let sharedData = null;
 module.exports = class {
     data = null;
 
-    constructor(limit = Infinity) {
+    constructor() {
         return (async () => {
             if (sharedData === null) {
                 const csv = await fetch('cities/worldcities.csv')
@@ -14,8 +14,11 @@ module.exports = class {
                 sharedData = csvToJSON(csv);
                 sharedData.sort((a, b) => b.population - a.population);
             }
-            // Trim to limit but keep all Russian cities
-            this.data = sharedData.filter((e, i) => i < limit || e.country == 'Russia');
+            // Trim to limit but keep more Russian cities
+            this.data = sharedData.filter((e, i) =>
+                e.population > 80000 ||
+                e.population > 25000 && e.country == 'Russia'
+            );
             return this;
         })();
     }
