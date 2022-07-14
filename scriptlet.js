@@ -19,7 +19,7 @@
                 text: e.querySelector('#message').innerText,
             }));
             const b = a.slice(a.findIndex(e => e.id == this.#lastId) + 1);
-            this.#lastId = a[a.length - 1].id;
+            this.#lastId = a[a.length - 1]?.id;
             return b;
         }
     };
@@ -28,17 +28,39 @@
     const msgExtractor = new MessageExtractor();
     const w = window.open(uri);
     cleanup.push(_ => w.close());
-    const mo = new MutationObserver(() => {
+
+    const sendData = () => {
         const newMsgs = msgExtractor.fetchNew();
-        w.postMessage(JSON.stringify(newMsgs), uri);
-    });
+        if (newMsgs.length > 0) {
+            w.postMessage(JSON.stringify(newMsgs), uri);
+        }
+    }
+
+    let onStart;
+
+    // MutationObserver should provide better performance,
+    // but breaks when switching from "Top chat" to "Live chat"
+    const useMutationObserver = false;
+    if (useMutationObserver) {
+        const mo = new MutationObserver(sendData);
+        onStart = () => {
+            mo.observe(msgExtractor.root, { childList: true });
+            cleanup.push(_ => mo.disconnect());
+        };
+    } else {
+        onStart = () => {
+            const id = setInterval(sendData, 1000);
+            cleanup.push(_ => clearInterval(id));
+        };
+    }
+
     const onMessage = function(event) {
         if (event.origin != uri) { return; }
         if (event.data != 'start') { return; }
-        mo.observe(msgExtractor.root, { childList: true });
-        cleanup.push(_ => mo.disconnect());
+        onStart();
         removeEventListener('message', onMessage);
     };
     window.addEventListener('message', onMessage);
     cleanup.push(_ => removeEventListener('message', onMessage));
+
 })();
