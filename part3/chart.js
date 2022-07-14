@@ -56,8 +56,8 @@ function create() {
             silent: true,
             animation: false,
             itemStyle: {
-                areaColor: '#323c48',
-                borderColor: '#111'
+                areaColor: '#101010',
+                borderColor: '#404040'
             }
         },
         dataset: {
