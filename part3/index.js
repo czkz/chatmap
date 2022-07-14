@@ -29,13 +29,14 @@ module.exports = class {
         }
 
         this.#viewerData.addViewer(cityName);
+    }
 
+    update() {
         this.#chart.setOption({
             dataset: {
                 source: this.#viewerData.generate()
             }
         });
-
         this.#tip.show(this.#viewerData.lastAddedIndex);
     }
 

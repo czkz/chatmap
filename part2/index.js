@@ -11,6 +11,8 @@ function getToken(str) {
     for (const w of words.reverse()) {
         if (w == 'область') { continue; }
         if (w == 'край') { continue; }
+        if (w == 'сити') { continue; }
+        if (w == 'city') { continue; }
         return w;
     }
 }
