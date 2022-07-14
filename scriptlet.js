@@ -3,21 +3,16 @@
 
     const MessageExtractor = class {
         #lastId;
-        #root;
-		get root() { return this.#root; }
-
-        constructor() {
-            this.#root = (
-                document.querySelector('#chatframe')?.contentDocument ?? document).querySelector('#chat #items');
-        }
 
         fetchNew() {
-            const a = Array.from(this.#root.querySelectorAll('yt-live-chat-text-message-renderer')).map(e => ({
-                id: e.id,
-                author: e.querySelector('#author-name').innerText,
-                timestamp: e.querySelector('#timestamp').innerText,
-                text: e.querySelector('#message').innerText,
-            }));
+            const a = Array.from((document.querySelector('#chatframe')?.contentDocument ?? document)
+                .querySelectorAll('#chat #items yt-live-chat-text-message-renderer'))
+                .map(e => ({
+                    id: e.id,
+                    author: e.querySelector('#author-name').innerText,
+                    timestamp: e.querySelector('#timestamp').innerText,
+                    text: e.querySelector('#message').innerText,
+                }));
             const b = a.slice(a.findIndex(e => e.id == this.#lastId) + 1);
             this.#lastId = a[a.length - 1]?.id;
             return b;
@@ -44,7 +39,7 @@
     if (useMutationObserver) {
         const mo = new MutationObserver(sendData);
         onStart = () => {
-            mo.observe(msgExtractor.root, { childList: true });
+            mo.observe((document.querySelector('#chatframe')?.contentDocument ?? document).querySelector('#chat #items'), { childList: true });
             cleanup.push(_ => mo.disconnect());
         };
     } else {
