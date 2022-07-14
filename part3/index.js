@@ -11,6 +11,7 @@ module.exports = class {
     #viewerData = null;
     #chart = null;
     #tip = null;
+    #newTip = false;
 
     constructor() {
         return (async () => {
@@ -29,6 +30,7 @@ module.exports = class {
         }
 
         this.#viewerData.addViewer(cityName);
+        this.#newTip = true;
     }
 
     update() {
@@ -38,7 +40,10 @@ module.exports = class {
                 source: window.rawData
             }
         });
-        this.#tip.show(this.#viewerData.lastAddedIndex);
+        if (this.#newTip == true) {
+            this.#tip.show(this.#viewerData.lastAddedIndex);
+            this.#newTip = false;
+        }
     }
 
     backup() {

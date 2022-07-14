@@ -11,7 +11,11 @@ class ViewerData {
     }
 
     addViewer(cityName) {
-        this.data[cityName] = (this.data[cityName] ?? 0) + 1;
+        const viewers = this.data[cityName] ?? 0;
+        this.data[cityName] = viewers + 1;
+        // if (viewers == 0) {
+        //     this.lastAddedCityName = cityName;
+        // }
         this.lastAddedCityName = cityName;
     }
 
