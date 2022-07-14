@@ -32,12 +32,21 @@ module.exports = class {
     }
 
     update() {
+        window.rawData = this.#viewerData.generate();
         this.#chart.setOption({
             dataset: {
-                source: this.#viewerData.generate()
+                source: window.rawData
             }
         });
         this.#tip.show(this.#viewerData.lastAddedIndex);
+    }
+
+    backup() {
+        return this.#viewerData.backup();
+    }
+
+    restore(backup) {
+        this.#viewerData.restore(backup);
     }
 
 };

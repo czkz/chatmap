@@ -26,6 +26,15 @@ class ViewerData {
         }
         return ret;
     }
+
+    backup() {
+        return JSON.stringify(this.data);
+    }
+
+    restore(backup) {
+        this.data = JSON.parse(backup);
+    }
+
 };
 
 module.exports = ViewerData;
