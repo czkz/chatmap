@@ -54,6 +54,7 @@ function create() {
                 }
             },
             silent: true,
+            animation: false,
             itemStyle: {
                 areaColor: '#323c48',
                 borderColor: '#111'

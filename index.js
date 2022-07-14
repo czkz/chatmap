@@ -7,9 +7,9 @@ const Part3 = require('./part3');
 
 (async function main() {
 
-    const part1 = new Part1();
-    const part2 = await new Part2(500);
-    const part3 = await new Part3();
+    window. part1 = new Part1();
+    window. part2 = await new Part2(500);
+    window. part3 = await new Part3();
 
     part1.onNewMessages = function(msgs) {
         msgs.forEach(msg => {
@@ -21,7 +21,26 @@ const Part3 = require('./part3');
     };
     part1.start();
 
-    setInterval(() => part3.update(), 1000);
+
+    const update = {
+        triggerNow() {
+            part3.update();
+        },
+        enable() {
+            this.id = setInterval(() => {
+                this.triggerNow();
+            }, 1000);
+        },
+        disable() {
+            clearInterval(this.id);
+        }
+    };
+
+    window.addEventListener('mousedown', () => { update.disable(); });
+    window.addEventListener('mouseup', () => { update.enable(); });
+    window.addEventListener('wheel', () => { update.disable(); update.enable(); }, true);
+
+    update.enable();
 
     // const cities = await new CityData();
     //
