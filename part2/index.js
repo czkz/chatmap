@@ -6,14 +6,20 @@ function toWords(str) {
     return natural.PorterStemmerRu.tokenizeAndStem(str);
 }
 
+function stem(str) {
+    return toWords(str)[0];
+}
+
 function getToken(str) {
     const words = toWords(str);
     for (const w of words.reverse()) {
-        if (w == 'область') { continue; }
-        if (w == 'край') { continue; }
-        if (w == 'сити') { continue; }
-        if (w == 'city') { continue; }
-        if (w.length <= 2) { continue; }
+        if (w == stem('область')) { continue; }
+        if (w == stem('край'))    { continue; }
+        if (w == stem('сити'))    { continue; }
+        if (w == stem('city'))    { continue; }
+        if (w == stem('страна'))  { continue; }
+        if (w == stem('город'))   { continue; }
+        if (w.length <= 2)        { continue; }
         return w;
     }
 }
@@ -33,6 +39,12 @@ module.exports = class {
                 this.#dict[getToken(city.name_ru)] = city.name;
                 this.#dict[getToken(city.name)] = city.name;
             });
+            this.#dict[stem('Питер')]     = 'Saint Petersburg';
+            this.#dict[stem('СПБ')]       = 'Saint Petersburg';
+            this.#dict[stem('Ленинград')] = 'Saint Petersburg';
+            this.#dict[stem('Петроград')] = 'Saint Petersburg';
+            this.#dict[stem('NY')]        = 'New York';
+            this.#dict[stem('LA')]        = 'Los Angeles';
             delete this.#dict[undefined];
             delete this.#dict[null];
             return this;
