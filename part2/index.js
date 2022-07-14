@@ -27,9 +27,8 @@ module.exports = class {
             console.log(cityData);
 
             cityData.data.forEach(city => {
-                const wordsRu = toWords(city.name_ru);
-                const token = wordsRu[wordsRu.length - 1];
-                this.#dict[token] = city.name;
+                this.#dict[getToken(city.name_ru)] = city.name;
+                this.#dict[getToken(city.name)] = city.name;
             });
             return this;
         })();
