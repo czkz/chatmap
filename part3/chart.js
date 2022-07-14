@@ -1,8 +1,11 @@
 'use strict';
 const echarts = require('echarts');
 const world = require('./world.min.js');
+const hash = require('./murmur').hash;
 
 let myChart = null;
+
+const hashSeed = crypto.getRandomValues(new Uint32Array(1))[0];
 
 function create() {
     if (myChart !== null) {
@@ -41,7 +44,7 @@ function create() {
         // },
         geo: {
             map: 'world',
-            roam: false,
+            roam: true,
             emphasis: {
                 label: {
                     show: false
@@ -61,14 +64,21 @@ function create() {
             source: []
         },
         series: {
-            type: 'effectScatter',
+            type: 'scatter',
             coordinateSystem: 'geo',
             geoIndex: 0,
-            symbolSize: function (params) {
-                return (params[3] - 1) * 1.5 + 5;
+            symbolSize: function (value) {
+                const x = value[3];
+                const scale = 20;
+                const smooth = 3;
+                return (x * scale) / (x + smooth);
             },
             itemStyle: {
-                color: '#F6F6F6'
+                color: function(params) {
+                    const h2rgb2 = t => [0, 1, 2].map(e => Math.cos((e / 3 - t) * Math.PI * 2) * 0.5 + 0.5);
+                    const color = h2rgb2(hash(params.value[2], hashSeed) / 2**32);
+                    return `rgb(${color.map(e => Math.floor(e * 256)).join(', ')})`;
+                }
             },
             encode: {
                 lat: 'lat',
