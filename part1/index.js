@@ -16,7 +16,13 @@ module.exports = class {
     }
 
     start() {
-        window.opener.postMessage('start', '*');
+        if (window.opener) {
+            window.opener.postMessage('start', '*');
+            return true;
+        } else {
+            console.log('Part1.start() failed - window.opener is null');
+            return false;
+        }
     }
 
     disable() {
