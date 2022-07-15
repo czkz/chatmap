@@ -46,14 +46,20 @@ function create() {
             map: 'world',
             roam: true,
             emphasis: {
+                disabled: true,
                 label: {
-                    show: false
+                    show: true,
+                    color: "#ffffff"
                 },
                 itemStyle: {
-                    areaColor: '#2a333d'
+                    areaColor: '#161b21'
                 }
             },
-            silent: true,
+            silent: false,
+            tooltip: {
+                show: true,
+                position: 'inside'
+            },
             animation: false,
             itemStyle: {
                 areaColor: '#101010',
