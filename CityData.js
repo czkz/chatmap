@@ -1,9 +1,8 @@
-'use strict';
-const csvToJSON = require('./csv').toJSON;
+import { toJSON as csvToJSON } from './csv.js';
 
 let sharedData = null;
 
-module.exports = class {
+export default class {
     data = null;
 
     constructor() {

@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = class {
+export default class {
     #listener;
 
     onNewMessages = null;

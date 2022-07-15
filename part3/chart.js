@@ -1,7 +1,9 @@
 'use strict';
-const echarts = require('echarts');
-const world = require('./world.min.js');
-const hash = require('./murmur').hash;
+import * as echarts from 'https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.esm.js';
+import { hash } from './murmur.js';
+
+const world = await fetch('https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json').then(e => e.json());
+echarts.registerMap('world', {geoJSON: world});
 
 let myChart = null;
 
@@ -103,6 +105,4 @@ function create() {
     return myChart;
 }
 
-module.exports = {
-    create
-};
+export { create };

@@ -1,5 +1,3 @@
-'use strict';
-
 class TooltipManager {
     #untipId = null;
     #chart = null;
@@ -29,4 +27,4 @@ class TooltipManager {
 
 };
 
-module.exports = TooltipManager;
+export default TooltipManager;

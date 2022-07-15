@@ -1,5 +1,3 @@
-'use strict';
-
 class ViewerData {
     #cityData;
     data = Object.create(null);
@@ -41,4 +39,4 @@ class ViewerData {
 
 };
 
-module.exports = ViewerData;
+export default ViewerData;

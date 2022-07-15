@@ -1,8 +1,7 @@
-'use strict';
-const stemlib = require('./stem');
-const CityData = require('../CityData');
+import * as stemlib from './stem.js';
+import CityData from '../CityData.js';
 
-module.exports = class {
+export default class {
 
     #dict = Object.create(null);
 

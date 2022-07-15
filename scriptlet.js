@@ -19,7 +19,7 @@
         }
     };
 
-    const uri = 'http://127.0.0.1:9966';
+    const uri = 'http://127.0.0.1:8080';
     const msgExtractor = new MessageExtractor();
     const w = window.open(uri);
     cleanup.push(_ => w.close());

@@ -1,11 +1,10 @@
-'use strict';
-const CityData = require('../CityData');
-const ViewerData = require('./ViewerData')
-const chart_mod = require('./chart');
-const TooltipManager = require('./tooltip');
+import CityData from '../CityData.js';
+import ViewerData from './ViewerData.js';
+import * as chart_module from './chart.js';
+import TooltipManager from './tooltip.js';
 
 
-module.exports = class {
+export default class {
 
     #cityData = null;
     #viewerData = null;
@@ -17,7 +16,7 @@ module.exports = class {
         return (async () => {
             this.#cityData = await new CityData();
             this.#viewerData = new ViewerData(this.#cityData);
-            this.#chart = chart_mod.create();
+            this.#chart = chart_module.create();
             this.#tip = new TooltipManager(this.#chart);
             return this;
         })();

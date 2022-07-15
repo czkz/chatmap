@@ -1,6 +1,5 @@
-'use strict';
-const AggressiveTokenizerRu = require('natural/lib/natural/tokenizers/aggressive_tokenizer_ru');
-const PorterStemmerRu = require('natural/lib/natural/stemmers/porter_stemmer_ru');
+import AggressiveTokenizerRu from './natural/aggressive_tokenizer_ru.js';
+import PorterStemmerRu from './natural/porter_stemmer_ru.js';
 
 const tokenizer = new AggressiveTokenizerRu();
 
@@ -40,4 +39,4 @@ function cityToken(str, cityInfo) {
     }
 }
 
-module.exports = { tokenize, stem, startsWithCapital, nameTokens, cityToken };
+export { tokenize, stem, startsWithCapital, nameTokens, cityToken };
