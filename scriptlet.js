@@ -19,7 +19,7 @@
         }
     };
 
-    const uri = 'http://127.0.0.1:8080';
+    const uri = 'https://czkz.github.io/chatmap/';
     const msgExtractor = new MessageExtractor();
     const w = window.open(uri);
     cleanup.push(_ => w.close());
@@ -29,12 +29,12 @@
         if (newMsgs.length > 0) {
             w.postMessage(JSON.stringify(newMsgs), uri);
         }
-    }
+    };
 
     let onStart;
 
-    // MutationObserver should provide better performance,
-    // but breaks when switching from "Top chat" to "Live chat"
+    /* MutationObserver should provide better performance,
+       but breaks when switching from "Top chat" to "Live chat" */
     const useMutationObserver = false;
     if (useMutationObserver) {
         const mo = new MutationObserver(sendData);
@@ -50,7 +50,7 @@
     }
 
     const onMessage = function(event) {
-        if (event.origin != uri) { return; }
+        if (!uri.startsWith(event.origin)) { return; }
         if (event.data != 'start') { return; }
         onStart();
         removeEventListener('message', onMessage);
