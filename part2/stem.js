@@ -1,14 +1,15 @@
 'use strict';
-const natural = require('natural');
+const AggressiveTokenizerRu = require('natural/lib/natural/tokenizers/aggressive_tokenizer_ru');
+const PorterStemmerRu = require('natural/lib/natural/stemmers/porter_stemmer_ru');
 
-const tokenizer = new natural.AggressiveTokenizerRu();
+const tokenizer = new AggressiveTokenizerRu();
 
 function tokenize(text) {
     return tokenizer.tokenize(text);
 }
 
 function stem(word) {
-    return natural.PorterStemmerRu.stem(word);
+    return PorterStemmerRu.stem(word);
 }
 
 function startsWithCapital(word) {
