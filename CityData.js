@@ -12,12 +12,12 @@ export default class {
                     .then(resp => resp.text());
                 sharedData = csvToJSON(csv);
                 sharedData.sort((a, b) => b.population - a.population);
+                sharedData = sharedData.filter((e, i) =>
+                    e.population > 80000 ||
+                    e.population > 25000 && e.country == 'Russia'
+                );
             }
-            // Trim to limit but keep more Russian cities
-            this.data = sharedData.filter((e, i) =>
-                e.population > 80000 ||
-                e.population > 25000 && e.country == 'Russia'
-            );
+            this.data = sharedData;
             return this;
         })();
     }
