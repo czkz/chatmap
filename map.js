@@ -37,10 +37,17 @@ const update = {
     }
 };
 
-window.addEventListener('click', () => { part3.inhibitTooltip(); });
-window.addEventListener('mousedown', () => { update.disable(); });
+window.addEventListener('click', () => { part3.tip.inhibit(); });
+window.addEventListener('mousedown', () => {
+    update.disable();
+    part3.tip.hide();
+});
 window.addEventListener('mouseup', () => { update.enable(); });
-window.addEventListener('wheel', () => { update.disable(); update.enable(); }, true);
+window.addEventListener('wheel', () => {
+    update.disable();
+    update.enable();
+    part3.tip.hide();
+}, true);
 
 update.enable();
 

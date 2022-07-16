@@ -9,7 +9,7 @@ export default class {
     #cityData = null;
     #viewerData = null;
     #chart = null;
-    #tip = null;
+    tip = null;
     #newTip = false;
 
     constructor() {
@@ -17,7 +17,7 @@ export default class {
             this.#cityData = await new CityData();
             this.#viewerData = new ViewerData(this.#cityData);
             this.#chart = chart_module.create();
-            this.#tip = new TooltipManager(this.#chart);
+            this.tip = new TooltipManager(this.#chart);
             return this;
         })();
     }
@@ -33,7 +33,7 @@ export default class {
     }
 
     inhibitTooltip() {
-        this.#tip.inhibit();
+        this.tip.inhibit();
     }
 
     update() {
@@ -44,7 +44,7 @@ export default class {
             }
         });
         if (this.#newTip == true) {
-            this.#tip.show(this.#viewerData.lastAddedIndex);
+            this.tip.show(this.#viewerData.lastAddedIndex);
             this.#newTip = false;
         }
     }
