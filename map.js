@@ -4,9 +4,13 @@ import Part2 from './part2/index.js';
 import Part3 from './part3/index.js';
 
 
-window. part1 = new Part1();
-window. part2 = await new Part2();
-window. part3 = await new Part3();
+window.part1 = new Part1();
+window.part2 = await new Part2();
+window.part3 = await new Part3();
+
+window.bkp = function() {
+    window.open().document.write(part3.backup());
+};
 
 part1.onNewMessages = function(msgs) {
     msgs.forEach(msg => {
