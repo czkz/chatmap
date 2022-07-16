@@ -55,7 +55,43 @@ function create() {
             },
             silent: false,
             tooltip: {
-                position: 'inside'
+                position: function (point, params, dom, rect, size) {
+                    const countryCenter = [
+                        rect.x + rect.width / 2,
+                        rect.y + rect.height / 2,
+                    ];
+                    const isVisible = p => (
+                        p[0] > 0 &&
+                        p[1] > 0 &&
+                        p[0] < size.viewSize[0] &&
+                        p[1] < size.viewSize[1]
+                    );
+                    const cSize2 = size.contentSize.map(e => e / 2);
+                    // p0, p1 - corners of the bounding box of the label
+                    const p0 = [
+                        countryCenter[0] - cSize2[0],
+                        countryCenter[1] - cSize2[1],
+                    ];
+                    const p1 = [
+                        countryCenter[0] + cSize2[0],
+                        countryCenter[1] + cSize2[1],
+                    ];
+                    const labelFullyVisible = isVisible(p0) && isVisible(p1);
+                    // From countryCenter to mouse pointer
+                    const dist = Math.sqrt(
+                        (countryCenter[0] - point[0]) ** 2 +
+                        (countryCenter[1] - point[1]) ** 2
+                    );
+                    if (labelFullyVisible && dist < 200) {
+                        return p0;
+                    } else {
+                        // Just above the mouse pointer
+                        return [
+                            point[0] - cSize2[0],
+                            point[1] - cSize2[1] * 2 - 10,
+                        ];
+                    }
+                }
             },
             animation: false,
             itemStyle: {
