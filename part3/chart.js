@@ -28,13 +28,9 @@ function create() {
             backgroundColor: '#0000',
             borderColor: '#0000',
             padding: 0,
-            position: 'top',
             textStyle: {
                 color: '#ffffff'
             },
-            formatter: (params) => {
-                return `${params.value[2]}: ${params.value[3]}`;
-            }
         },
         backgroundColor: '#000',
         // title: {
@@ -59,7 +55,6 @@ function create() {
             },
             silent: false,
             tooltip: {
-                show: true,
                 position: 'inside'
             },
             animation: false,
@@ -96,6 +91,12 @@ function create() {
                 itemId: 'city',
                 itemGroupId: 'city',
             },
+            tooltip: {
+                position: 'top',
+                formatter: (params) => {
+                    return `${params.value[2]}: ${params.value[3]}`;
+                }
+            }
         }
     };
     myChart.setOption(option);
