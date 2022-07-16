@@ -31,23 +31,10 @@ export default function() {
         }
     };
 
-    let onStart;
-
-    /* MutationObserver should provide better performance,
-       but breaks when switching from "Top chat" to "Live chat" */
-    const useMutationObserver = false;
-    if (useMutationObserver) {
-        const mo = new MutationObserver(sendData);
-        onStart = () => {
-            mo.observe((document.querySelector('#chatframe')?.contentDocument ?? document).querySelector('#chat #items'), { childList: true });
-            cleanup.push(_ => mo.disconnect());
-        };
-    } else {
-        onStart = () => {
-            const id = setInterval(sendData, 1000);
-            cleanup.push(_ => clearInterval(id));
-        };
-    }
+    const onStart = () => {
+        const id = setInterval(sendData, 1000);
+        cleanup.push(_ => clearInterval(id));
+    };
 
     const onMessage = function(event) {
         if (!uri.startsWith(event.origin)) { return; }
