@@ -23,8 +23,9 @@ class ViewerData {
             if (cityName === this.lastAddedCityName) {
                 this.lastAddedIndex = ret.length;
             }
-            const { lat, lng } = this.#cityData.getCityByName(cityName);
-            ret.push([lat, lng, cityName, viewers]);
+            const { lat, lng, name, name_ru, country } = this.#cityData.getCityByName(cityName);
+            const label = (country == 'Russia' ? name_ru : name);
+            ret.push([lat, lng, cityName, viewers, label]);
         }
         return ret;
     }

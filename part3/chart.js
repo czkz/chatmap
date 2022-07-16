@@ -64,7 +64,7 @@ function create() {
             }
         },
         dataset: {
-            dimensions: ['lat', 'lng', 'city', 'viewers'],
+            dimensions: ['lat', 'lng', 'city', 'viewers', 'label'],
             source: []
         },
         series: {
@@ -94,7 +94,7 @@ function create() {
             tooltip: {
                 position: 'top',
                 formatter: (params) => {
-                    return `${params.value[2]}: ${params.value[3]}`;
+                    return `${params.value[4]} – ${params.value[3]}`;
                 }
             }
         }
