@@ -32,6 +32,10 @@ export default class {
         this.#newTip = true;
     }
 
+    inhibitTooltip() {
+        this.#tip.inhibit();
+    }
+
     update() {
         window.rawData = this.#viewerData.generate();
         this.#chart.setOption({

@@ -33,6 +33,7 @@ const update = {
     }
 };
 
+window.addEventListener('click', () => { part3.inhibitTooltip(); });
 window.addEventListener('mousedown', () => { update.disable(); });
 window.addEventListener('mouseup', () => { update.enable(); });
 window.addEventListener('wheel', () => { update.disable(); update.enable(); }, true);
