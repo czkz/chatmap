@@ -19,7 +19,7 @@ export default function() {
         }
     };
 
-    const uri = 'https://czkz.github.io/chatmap/';
+    const uri = 'https://czkz.github.io/chatmap/map.html';
     const msgExtractor = new MessageExtractor();
     const w = window.open(uri);
     cleanup.push(_ => w.close());
