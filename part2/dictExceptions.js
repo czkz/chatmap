@@ -25,4 +25,13 @@ export function apply(dict) {
     delete dict['диван'];
     delete dict['бред'];
     delete dict['спец'];
+    delete dict['ура'];
+    delete dict['над'];
+    delete dict['гей'];
+    delete dict['зим'];
+    delete dict['Зима'];
+    delete dict['чех'];
+    delete dict['лук'];
+    delete dict['мур'];
+    delete dict['южн'];
 }
