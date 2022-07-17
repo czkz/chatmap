@@ -130,7 +130,7 @@ function create() {
             tooltip: {
                 position: 'top',
                 formatter: (params) => {
-                    return `${params.value[4]} – ${params.value[3]}`;
+                    return `${params.value[4]}: ${params.value[3]}`;
                 }
             }
         }
