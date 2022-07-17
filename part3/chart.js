@@ -43,6 +43,8 @@ function create() {
         geo: {
             map: 'world',
             roam: true,
+            animation: false,
+            silent: false,
             emphasis: {
                 disabled: true,
                 label: {
@@ -53,7 +55,10 @@ function create() {
                     areaColor: '#161b21'
                 }
             },
-            silent: false,
+            itemStyle: {
+                areaColor: '#101010',
+                borderColor: '#404040'
+            },
             tooltip: {
                 position: function (point, params, dom, rect, size) {
                     const countryCenter = [
@@ -93,11 +98,6 @@ function create() {
                     }
                 }
             },
-            animation: false,
-            itemStyle: {
-                areaColor: '#101010',
-                borderColor: '#404040'
-            }
         },
         dataset: {
             dimensions: ['lat', 'lng', 'city', 'viewers', 'label'],
