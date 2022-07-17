@@ -57,7 +57,7 @@ function create() {
             },
             itemStyle: {
                 areaColor: '#101010',
-                borderColor: '#404040'
+                borderColor: '#808080'
             },
             tooltip: {
                 position: function (point, params, dom, rect, size) {
