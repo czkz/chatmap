@@ -1,4 +1,5 @@
 import * as stemlib from './stem.js';
+import * as dictExceptions from './dictExceptions.js';
 import CityData from '../CityData.js';
 
 export default class {
@@ -18,12 +19,7 @@ export default class {
                 this.#dict[city.name] = city.name;
                 this.#dict[city.name_ru] = city.name;
             });
-            this.#dict[stemlib.stem('Питер')]     = 'Saint Petersburg';
-            this.#dict[stemlib.stem('СПБ')]       = 'Saint Petersburg';
-            this.#dict[stemlib.stem('Ленинград')] = 'Saint Petersburg';
-            this.#dict[stemlib.stem('Петроград')] = 'Saint Petersburg';
-            this.#dict[stemlib.stem('NY')]        = 'New York';
-            this.#dict[stemlib.stem('LA')]        = 'Los Angeles';
+            dictExceptions.apply(this.#dict);
             delete this.#dict[undefined];
             delete this.#dict[null];
             return this;
