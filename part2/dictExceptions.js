@@ -7,11 +7,15 @@ export function apply(dict) {
     dict[stemlib.stem('Петроград')]   = 'Saint Petersburg';
     dict[stemlib.stem('NY')]          = 'New York';
     dict[stemlib.stem('LA')]          = 'Los Angeles';
+    dict['Александрии'] = 'Alexandria';
+    dict['Александрии'] = 'Alexandria';
     dict['Борисов']     = 'Horad Barysaw';
     dict['Борисова']    = 'Horad Barysaw';
-    dict['Александрии'] = 'Alexandria';
+    dict['Московский']  = 'Moskovskiy';
+    dict['Московского'] = 'Moskovskiy';
     delete dict['александр'];
     delete dict['борис'];
+    delete dict['московск'];
     delete dict['сама'];
     delete dict['дава'];
     delete dict['майн'];
