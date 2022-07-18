@@ -16,6 +16,18 @@ export default class {
                     e.population > 80000 ||
                     e.population > 25000 && e.country == 'Russia'
                 );
+                sharedData.push({
+                    "name": "Vladibablo",
+                    "lat": "40",
+                    "lng": "-40",
+                    "country": "Russia",
+                    "iso2": "RU",
+                    "iso3": "RUS",
+                    "admin_name": "Vladibablo",
+                    "population": "0",
+                    "name_ru": "Владибабло",
+                    "admin_name_ru": "Владибабло"
+                });
             }
             this.data = sharedData;
             return this;
