@@ -1,37 +1,31 @@
 import * as stemlib from './stem.js';
 
 export function apply(dict) {
-    dict[stemlib.stem('Питер')]       = 'Saint Petersburg';
-    dict[stemlib.stem('СПБ')]         = 'Saint Petersburg';
-    dict[stemlib.stem('Ленинград')]   = 'Saint Petersburg';
-    dict[stemlib.stem('Петроград')]   = 'Saint Petersburg';
-    dict[stemlib.stem('NY')]          = 'New York';
-    dict[stemlib.stem('LA')]          = 'Los Angeles';
+    dict[stemlib.stem('Питер')]     = 'Saint Petersburg';
+    dict[stemlib.stem('СПБ')]       = 'Saint Petersburg';
+    dict[stemlib.stem('Ленинград')] = 'Saint Petersburg';
+    dict[stemlib.stem('Петроград')] = 'Saint Petersburg';
+    dict[stemlib.stem('ЕКБ')]       = 'Yekaterinburg';
+    dict[stemlib.stem('Екат')]      = 'Yekaterinburg';
+    dict['NY']          = 'New York';
+    dict['LA']          = 'Los Angeles';
     dict['Александрии'] = 'Alexandria';
     dict['Александрии'] = 'Alexandria';
     dict['Борисов']     = 'Horad Barysaw';
     dict['Борисова']    = 'Horad Barysaw';
     dict['Московский']  = 'Moskovskiy';
     dict['Московского'] = 'Moskovskiy';
-    delete dict['александр'];
-    delete dict['борис'];
-    delete dict['московск'];
-    delete dict['сама'];
-    delete dict['дава'];
-    delete dict['майн'];
-    delete dict['матар'];
-    delete dict['Эта'];
-    delete dict['авас'];
-    delete dict['диван'];
-    delete dict['бред'];
-    delete dict['спец'];
-    delete dict['ура'];
-    delete dict['над'];
-    delete dict['гей'];
-    delete dict['зим'];
-    delete dict['Зима'];
-    delete dict['чех'];
-    delete dict['лук'];
-    delete dict['мур'];
-    delete dict['южн'];
+    [
+        'александр', 'борис',   'московск', 'сама',
+        'дава',      'майн',    'матар',    'Эта',
+        'авас',      'диван',   'бред',     'спец',
+        'ура',       'над',     'гей',      'зим',
+        'Зима',      'чех',     'лук',      'мур',
+        'южн',       'хорош',   'Хороший',  'ухт',
+        'брав',      'брем',    'сер',      'паду',
+        'лонг',      'корол',   'Вау',      'тысяч',
+        'Тэгу',      'сюрприз', 'surprise', 'Surprise',
+        'Сюрприз',   'Дай',     'армен',    'armenia',
+        'Armenia',   'Армения',
+    ].forEach(e => delete dict[e]);
 }
