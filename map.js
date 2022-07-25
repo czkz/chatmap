@@ -24,16 +24,20 @@ part1.start();
 
 
 const update = {
+    id: null,
     triggerNow() {
         part3.update();
     },
     enable() {
-        this.id = setInterval(() => {
-            this.triggerNow();
-        }, 1000);
+        if (this.id === null) {
+            this.id = setInterval(() => {
+                this.triggerNow();
+            }, 1000);
+        }
     },
     disable() {
         clearInterval(this.id);
+        this.id = null;
     }
 };
 
