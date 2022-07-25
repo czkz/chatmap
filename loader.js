@@ -32,7 +32,7 @@ export default function() {
     };
 
     const onStart = () => {
-        const id = setInterval(sendData, 1000);
+        const id = setInterval(sendData, 500);
         cleanup.push(_ => clearInterval(id));
     };
 

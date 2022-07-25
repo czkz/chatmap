@@ -32,7 +32,7 @@ const update = {
         if (this.id === null) {
             this.id = setInterval(() => {
                 this.triggerNow();
-            }, 1000);
+            }, 500);
         }
     },
     disable() {
