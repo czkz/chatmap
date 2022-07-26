@@ -8,6 +8,7 @@ export default class {
 
     #cityData = null;
     #viewerData = null;
+    #prevRawData = null;
     #chart = null;
     tip = null;
     #newTip = false;
@@ -38,14 +39,16 @@ export default class {
 
     update() {
         window.rawData = this.#viewerData.generate();
-        this.#chart.setOption({
-            dataset: {
-                source: window.rawData
+        if (this.#prevRawData !== rawData) {
+            this.#chart.setOption({
+                dataset: {
+                    source: window.rawData
+                }
+            });
+            if (this.#newTip == true) {
+                this.tip.show(this.#viewerData.lastAddedIndex);
+                this.#newTip = false;
             }
-        });
-        if (this.#newTip == true) {
-            this.tip.show(this.#viewerData.lastAddedIndex);
-            this.#newTip = false;
         }
     }
 
