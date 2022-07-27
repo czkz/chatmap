@@ -10,7 +10,7 @@ export default class {
             if (sharedData === null) {
                 const csv = await fetch('cities/worldcities.csv')
                     .then(resp => resp.text());
-                sharedData = csvToJSON(csv);
+                sharedData = csvToJSON(csv, '\t');
                 sharedData.sort((a, b) => b.population - a.population);
                 sharedData = sharedData.filter((e, i) =>
                     e.population > 80000 ||
