@@ -13,8 +13,9 @@ export default class {
                 sharedData = csvToJSON(csv, '\t');
                 sharedData.sort((a, b) => b.population - a.population);
                 sharedData = sharedData.filter((e, i) =>
-                    e.population > 80000 ||
-                    e.population > 25000 && e.country == 'Russia'
+                    e.population > 70000 ||
+                    e.population > 10000 && e.country == 'Russia' ||
+                    e.population > 15000 && e.country == 'Montenegro'
                 );
                 sharedData.push({
                     "name": "Vladibablo",
@@ -28,6 +29,13 @@ export default class {
                     "name_ru": "Владибабло",
                     "admin_name_ru": "Владибабло"
                 });
+                sharedData = sharedData.filter(city => ![
+                    'Louga',
+                    'Bata',
+                    'Lae',
+                    'Svobodnyy',
+                    'Etah',
+                ].includes(city.name));
             }
             this.data = sharedData;
             return this;

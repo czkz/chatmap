@@ -1,38 +1,34 @@
-import * as stemlib from './stem.js';
-import * as dictExceptions from './dictExceptions.js';
-import CityData from '../CityData.js';
+import { genLUT } from './lut.js';
 
 export default class {
 
-    #dict = Object.create(null);
+    #lut = Object.create(null);
 
     constructor() {
         return (async () => {
-            const cityData = await new CityData();
-            console.log(cityData);
-
-            // Reverse so cities with higher population
-            // overwrite cities with lower population
-            cityData.data.slice().reverse().forEach(city => {
-                this.#dict[stemlib.cityToken(city.name_ru, city)] = city.name;
-                this.#dict[stemlib.cityToken(city.name, city)] = city.name;
-                this.#dict[city.name] = city.name;
-                this.#dict[city.name_ru] = city.name;
-            });
-            dictExceptions.apply(this.#dict);
-            delete this.#dict[undefined];
-            delete this.#dict[null];
+            this.#lut = genLUT();
             return this;
         })();
     }
 
     parseMsg(msg) {
-        const words = stemlib.nameTokens(msg).reverse();
-        for (const word of [...words, ...stemlib.tokenize(msg)]) {
-            const city = this.#dict[word];
-            if (city !== undefined) {
-                console.log(`Found city ${city} for token ${word}`);
-                return city;
+        const msgWords = msg
+            // .toLowerCase()
+            .replaceAll('ё', 'е')
+            .replaceAll(/[^a-zа-я0-9 ]/giu, ' ')
+            .replaceAll(/ +/g, ' ')
+            .split(' ');
+        for (let i = 0; i < msgWords.length; i++) {
+            const cityWords = msgWords.slice(i);
+            const firstRes = this.#lut[cityWords[0]];
+            if (firstRes !== undefined) {
+                const cityWordsJoined = cityWords.join(' ');
+                for (const { name, city } of firstRes) {
+                    if (cityWordsJoined.startsWith(name)) {
+                        console.log(`Found city ${city} for msg "${msg}"`);
+                        return city;
+                    }
+                }
             }
         }
         return null;
