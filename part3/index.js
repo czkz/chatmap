@@ -43,7 +43,11 @@ export default class {
             this.#chart.setOption({
                 dataset: {
                     source: window.rawData
-                }
+                },
+                graphic: chart_module.genTotalGraphic(
+                    this.#viewerData.nViewers,
+                    this.#viewerData.nCities
+                )
             });
             if (this.#newTip == true) {
                 this.tip.show(this.#viewerData.lastAddedIndex);

@@ -3,6 +3,8 @@ class ViewerData {
     data = Object.create(null);
     lastAddedCityName = null;
     lastAddedIndex = -1;
+    nViewers = 0;
+    nCities = 0;
 
     constructor(cityData) {
         this.#cityData = cityData;
@@ -11,9 +13,11 @@ class ViewerData {
     addViewer(cityName) {
         const viewers = this.data[cityName] ?? 0;
         this.data[cityName] = viewers + 1;
-        // if (viewers == 0) {
-        //     this.lastAddedCityName = cityName;
-        // }
+        if (viewers == 0) {
+            // this.lastAddedCityName = cityName;
+            this.nCities++;
+        }
+        this.nViewers++;
         this.lastAddedCityName = cityName;
     }
 
@@ -36,6 +40,10 @@ class ViewerData {
 
     restore(backup) {
         this.data = JSON.parse(backup);
+        Object.entries(this.data).forEach(([k, v]) => {
+            this.nCities++;
+            this.nViewers += v;
+        })
     }
 
 };
