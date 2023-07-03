@@ -9,15 +9,16 @@ let myChart = null;
 
 const hashSeed = crypto.getRandomValues(new Uint32Array(1))[0];
 
-let totalGraphicScale = 1.0;
+let totalGraphicScale = 0.7;
 let totalGraphicFont = '60px "Open Sans", sans-serif';
+let totalGraphicPos = [30, 30];
 
 function genTotalGraphic(viewers, cities) {
     return {
         id: 'total',
         type: 'text',
-        right: 30,
-        top: 30,
+        right: totalGraphicPos[0],
+        top: totalGraphicPos[1],
         scaleX: totalGraphicScale,
         scaleY: totalGraphicScale,
         transition: 'all',
@@ -45,18 +46,23 @@ function genTotalGraphic(viewers, cities) {
         //     totalGraphicScale *= 1 + e.wheelDelta * 0.1;
         //     console.log('Total scale:', totalGraphicScale);
         // },
-        // onclick: function(event) {
-        //     // if (totalGraphicScale >= 1) {
-        //     //     totalGraphicScale *= 0.5;
-        //     // } else {
-        //     //     totalGraphicScale *= 2;
-        //     // }
-        //     if (totalGraphicFont == 'lighter 60px sans-serif') {
-        //         totalGraphicFont = 'normal 60px sans-serif';
-        //     } else {
-        //         totalGraphicFont = 'lighter 60px sans-serif';
-        //     }
-        // },
+        onclick: function(event) {
+            // if (totalGraphicScale >= 1) {
+            //     totalGraphicScale *= 0.5;
+            // } else {
+            //     totalGraphicScale *= 2;
+            // }
+            // if (totalGraphicFont == 'lighter 60px sans-serif') {
+            //     totalGraphicFont = 'normal 60px sans-serif';
+            // } else {
+            //     totalGraphicFont = 'lighter 60px sans-serif';
+            // }
+            if (totalGraphicPos[1] == 30) {
+                totalGraphicPos = [90, 90];
+            } else {
+                totalGraphicPos = [30, 30];
+            }
+        },
     };
 }
 
