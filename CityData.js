@@ -29,6 +29,18 @@ export default class {
                     "name_ru": "Владибабло",
                     "admin_name_ru": "Владибабло"
                 });
+                sharedData.push({
+                    "name": "Langhorne",
+                    "lat": "40.1774",
+                    "lng": "-74.9189",
+                    "country": "United States",
+                    "iso2": "US",
+                    "iso3": "USA",
+                    "admin_name": "Pennsylvania",
+                    "population": "1622",
+                    "name_ru": "Ланггорн",
+                    "admin_name_ru": "Пенсильвания"
+                });
                 sharedData = sharedData.filter(city => ![
                     'Louga',
                     'Bata',
