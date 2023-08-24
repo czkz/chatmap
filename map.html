@@ -13,6 +13,19 @@
     * {
       margin: 0;
       padding: 0;
+      cursor: none;
+    }
+    #circle-cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: white;
+      pointer-events: none;
+      mix-blend-mode: difference;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      transition:opacity 500ms;
     }
     #chart-container {
       position: relative;
@@ -23,6 +36,22 @@
 </head>
 <body>
   <div id="chart-container"></div>
+  <div id="circle-cursor"></div>
+  <script>
+    const cursor = document.getElementById("circle-cursor");
+    document.addEventListener("mousemove", e => {
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+    }, true);
+    document.addEventListener("contextmenu", e => {
+      e.preventDefault();
+      if (cursor.style.opacity != '0') {
+        cursor.style.opacity = '0';
+      } else {
+        cursor.style.opacity = '1';
+      }
+    }, true);
+  </script>
   <script type="module" src="map.js"></script>
 </body>
 </html>
