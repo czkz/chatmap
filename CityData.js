@@ -16,7 +16,7 @@ export default class {
                     e.population > 70000 ||
                     e.population > 10000 && e.country == 'Russia' ||
                     e.population > 15000 && e.country == 'Montenegro' ||
-                    ['Wauconda'].includes(e.name)
+                    ['Wauconda', 'Monterrey', 'Bolzano'].includes(e.name)
                 );
                 sharedData.push({
                     "name": "Vladibablo",
