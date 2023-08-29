@@ -54,6 +54,18 @@ export default class {
                     "name_ru": "Перейбер",
                     "admin_name_ru": "Гранд Бэй"
                 });
+                sharedData.push({
+                    "name": "Aakirkeby",
+                    "lat": "55.0705",
+                    "lng": "14.9167",
+                    "country": "Denmark",
+                    "iso2": "DK",
+                    "iso3": "DNK",
+                    "admin_name": "Hovedstaden",
+                    "population": "2092",
+                    "name_ru": "Окиркебю",
+                    "admin_name_ru": "Ховедстаден"
+                });
                 sharedData = sharedData.filter(city => ![
                     'Louga',
                     'Bata',
