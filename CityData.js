@@ -42,6 +42,18 @@ export default class {
                     "name_ru": "Ланггорн",
                     "admin_name_ru": "Пенсильвания"
                 });
+                sharedData.push({
+                    "name": "Pereybere",
+                    "lat": "-20.0184",
+                    "lng": "57.5802",
+                    "country": "Mauritius",
+                    "iso2": "MU",
+                    "iso3": "MUS",
+                    "admin_name": "Grand Baie",
+                    "population": "1622",
+                    "name_ru": "Перейбер",
+                    "admin_name_ru": "Гранд Бэй"
+                });
                 sharedData = sharedData.filter(city => ![
                     'Louga',
                     'Bata',
