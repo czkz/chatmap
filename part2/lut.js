@@ -55,6 +55,10 @@ function addExtra(lut) {
     addCity(lut,    'Петроград',  'Saint Petersburg');
     addCity(lut,    'Петербург',  'Saint Petersburg');
     addCity(lut,    'Екат',       'Yekaterinburg');
+    addCity(lut,    'Ваконда',    'Wauconda');
+    addCity(lut,    'Воконда',    'Wauconda');
+    addCity(lut,    'Вуконда',    'Wauconda');
+    addCity(lut,    'Вауконда',   'Wauconda');
     addCityRaw(lut, 'Орла',       'Orel');
     addCityRaw(lut, 'Орле',       'Orel');
     addCityRaw(lut, 'Химок',      'Khimki');
