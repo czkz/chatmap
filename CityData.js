@@ -74,6 +74,18 @@ export default class {
                     "name_ru": "Окиркебю",
                     "admin_name_ru": "Ховедстаден"
                 });
+                sharedData.push({
+                    "name": "Rogachev",
+                    "lat": "53.1",
+                    "lng": "30.05",
+                    "country": "Belarus",
+                    "iso2": "BY",
+                    "iso3": "BLR",
+                    "admin_name": "Homyel’skaya Voblasts",
+                    "population": "32029",
+                    "name_ru": "Рогачев",
+                    "admin_name_ru": "Гомельская область"
+                });
                 sharedData = sharedData.filter(city => ![
                     'Louga',
                     'Bata',
