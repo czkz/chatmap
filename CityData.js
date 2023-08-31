@@ -16,6 +16,7 @@ export default class {
                     e.population > 70000 ||
                     e.population > 10000 && e.country == 'Russia' ||
                     e.population > 15000 && e.country == 'Montenegro' ||
+                    e.name == 'Bar' && e.country == 'Montenegro' ||
                     [
                         'Wauconda',
                         'Monterrey',
@@ -24,6 +25,7 @@ export default class {
                         'Fethiye',
                         'Crozon',
                         'Torshavn',
+                        'Sosua',
                     ].includes(e.name)
                 );
                 sharedData.push({

@@ -76,6 +76,10 @@ function addExtra(lut) {
     addCityRaw(lut, 'MSK',        'Moscow');
     addCityRaw(lut, 'NY',         'New York');
     addCityRaw(lut, 'LA',         'Los Angeles');
+    addCityRaw(lut, 'Бар Черногория', 'Bar');
+    addCityRaw(lut, 'Черногория Бар', 'Bar');
+    addCityRaw(lut, 'Bar Montenegro', 'Bar');
+    addCityRaw(lut, 'Montenegro Bar', 'Bar');
 }
 
 let cachedLUT = null;
