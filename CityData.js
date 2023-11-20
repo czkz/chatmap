@@ -88,6 +88,18 @@ export default class {
                     "name_ru": "Рогачев",
                     "admin_name_ru": "Гомельская область"
                 });
+                sharedData.push({
+                    "name": "Novaya Chara",
+                    "lat": "56.8",
+                    "lng": "118.3",
+                    "country": "Russia",
+                    "iso2": "RU",
+                    "iso3": "RUS",
+                    "admin_name": "Zabaykal’skiy Kray",
+                    "population": "4238",
+                    "name_ru": "Новая Чара",
+                    "admin_name_ru": "Забайкальский край"
+                });
                 sharedData = sharedData.filter(city => ![
                     'Louga',
                     'Bata',
