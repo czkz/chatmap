@@ -28,6 +28,10 @@ export default class {
                         'Sosua',
                     ].includes(e.name)
                 );
+                Object.assign(sharedData.find(e => e.name == 'Nur-Sultan'), {
+                    "name": "Astana",
+                    "name_ru": "Астана",
+                });
                 sharedData.push({
                     "name": "Vladibablo",
                     "lat": "40",

@@ -59,6 +59,7 @@ function addExtra(lut) {
     addCity(lut,    'Воконда',    'Wauconda');
     addCity(lut,    'Вуконда',    'Wauconda');
     addCity(lut,    'Вауконда',   'Wauconda');
+    addCity(lut,    'Нур-Султан', 'Astana');
     addCityRaw(lut, 'Орла',       'Orel');
     addCityRaw(lut, 'Орле',       'Orel');
     addCityRaw(lut, 'Химок',      'Khimki');
