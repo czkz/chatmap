@@ -60,6 +60,9 @@ function addExtra(lut) {
     addCity(lut,    'Вуконда',    'Wauconda');
     addCity(lut,    'Вауконда',   'Wauconda');
     addCity(lut,    'Нур-Султан', 'Astana');
+    addCity(lut,    'Тель Авив',  'Tel Aviv-Yafo');
+    addCity(lut,    'Яффа',       'Tel Aviv-Yafo');
+    addCity(lut,    'Яфо',        'Tel Aviv-Yafo');
     addCityRaw(lut, 'Орла',       'Orel');
     addCityRaw(lut, 'Орле',       'Orel');
     addCityRaw(lut, 'Химок',      'Khimki');
@@ -77,6 +80,8 @@ function addExtra(lut) {
     addCityRaw(lut, 'MSK',        'Moscow');
     addCityRaw(lut, 'NY',         'New York');
     addCityRaw(lut, 'LA',         'Los Angeles');
+    addCityRaw(lut, 'Tel Aviv',   'Tel Aviv-Yafo');
+    addCityRaw(lut, 'Yafo',       'Tel Aviv-Yafo');
     addCityRaw(lut, 'Бар Черногория', 'Bar');
     addCityRaw(lut, 'Черногория Бар', 'Bar');
     addCityRaw(lut, 'Bar Montenegro', 'Bar');
