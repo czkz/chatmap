@@ -104,6 +104,18 @@ export default class {
                     "name_ru": "Новая Чара",
                     "admin_name_ru": "Забайкальский край"
                 });
+                sharedData.push({
+                    "name": "Samosir",
+                    "lat": "2.58",
+                    "lng": "98.82",
+                    "country": "Indonesia",
+                    "iso2": "ID",
+                    "iso3": "IDN",
+                    "admin_name": "Sumatera Utara",
+                    "population": "108869",
+                    "name_ru": "Самосир",
+                    "admin_name_ru": "Суматра Утара"
+                });
                 sharedData = sharedData.filter(city => ![
                     'Louga',
                     'Bata',
