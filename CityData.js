@@ -26,6 +26,7 @@ export default class {
                         'Crozon',
                         'Torshavn',
                         'Sosua',
+                        'Lommel',
                     ].includes(e.name)
                 );
                 Object.assign(sharedData.find(e => e.name == 'Nur-Sultan'), {

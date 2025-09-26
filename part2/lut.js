@@ -63,6 +63,7 @@ function addExtra(lut) {
     addCity(lut,    'Тель Авив',  'Tel Aviv-Yafo');
     addCity(lut,    'Яффа',       'Tel Aviv-Yafo');
     addCity(lut,    'Яфо',        'Tel Aviv-Yafo');
+    addCity(lut,    'Ломмел',     'Lommel');
     addCityRaw(lut, 'Орла',       'Orel');
     addCityRaw(lut, 'Орле',       'Orel');
     addCityRaw(lut, 'Химок',      'Khimki');
