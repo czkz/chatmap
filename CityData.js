@@ -16,6 +16,7 @@ export default class {
                     e.population > 70000 ||
                     e.population > 10000 && e.country == 'Russia' ||
                     e.population > 15000 && e.country == 'Montenegro' ||
+                    e.population > 15000 && e.name.length >= 5 && e.name_ru.length >= 5 ||
                     e.name == 'Bar' && e.country == 'Montenegro' ||
                     [
                         'Wauconda',
@@ -27,6 +28,12 @@ export default class {
                         'Torshavn',
                         'Sosua',
                         'Lommel',
+                        'Ludza',
+                        'Tivat',
+                        'Narvik',
+                        'Moravce',
+                        'Zell am See',
+                        'Kotor',
                     ].includes(e.name)
                 );
                 Object.assign(sharedData.find(e => e.name == 'Nur-Sultan'), {
@@ -117,12 +124,50 @@ export default class {
                     "name_ru": "Самосир",
                     "admin_name_ru": "Суматра Утара"
                 });
+                sharedData.push({
+                    "name": "Ushachy",
+                    "lat": "55.18",
+                    "lng": "28.61",
+                    "country": "Belarus",
+                    "iso2": "BY",
+                    "iso3": "BLR",
+                    "admin_name": "Vitebsk Region",
+                    "population": "5714",
+                    "name_ru": "Ушачи",
+                    "admin_name_ru": "Витебская область"
+                });
+                sharedData.push({
+                    "name": "Roja",
+                    "lat": "57.50",
+                    "lng": "22.81",
+                    "country": "Latvia",
+                    "iso2": "LV",
+                    "iso3": "LVA",
+                    "admin_name": "Kurzeme",
+                    "population": "2120",
+                    "name_ru": "Роя",
+                    "admin_name_ru": "Курземе"
+                });
+                sharedData.push({
+                    "name": "Wivenhoe",
+                    "lat": "51.86",
+                    "lng": "0.96",
+                    "country": "United Kingdom",
+                    "iso2": "GB",
+                    "iso3": "GBR",
+                    "admin_name": "Essex",
+                    "population": "7637",
+                    "name_ru": "Вивенхоу",
+                    "admin_name_ru": "Эссекс"
+                });
                 sharedData = sharedData.filter(city => ![
                     'Louga',
                     'Bata',
                     'Lae',
                     'Svobodnyy',
                     'Etah',
+                    'Montenegro',
+                    'Wooster',
                 ].includes(city.name));
             }
             this.data = sharedData;

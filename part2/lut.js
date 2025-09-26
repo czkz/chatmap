@@ -26,8 +26,12 @@ function decline(word, casei) {
     return rne.decline(lemma, RussianNouns.CASES[casei])[0];
 }
 
+function stripAccent(text) {
+    return text.normalize("NFD").replace(/\p{Diacritic}/gu, "");
+}
+
 function addCityRaw(lut, name, city) {
-    const firstWord = name.split(' ')[0];
+    const firstWord = stripAccent(name.replaceAll('-', ' ').split(' ')[0]);
     lut[firstWord] ??= Object.create(null);
     lut[firstWord][name] ??= city;  // ?? to not overwrite cities with higher population
 }
@@ -64,6 +68,18 @@ function addExtra(lut) {
     addCity(lut,    'Яффа',       'Tel Aviv-Yafo');
     addCity(lut,    'Яфо',        'Tel Aviv-Yafo');
     addCity(lut,    'Ломмел',     'Lommel');
+    addCity(lut,    'Льв\u0456в', 'Lviv');
+    addCity(lut,    'Ушачи',      'Ushachy');
+    addCity(lut,    'Черн\u0456г\u0456в', 'Chernihiv');
+    addCity(lut,    'Моравче',    'Moravce');
+    addCity(lut,    'Цель ам Зее','Zell am See');
+    addCity(lut,    'Целль ам Зее','Zell am See');
+    addCity(lut,    'Лудза',      'Ludza');
+    addCity(lut,    'Буенос-Айрес','Buenos Aires');
+    addCity(lut,    'Вивенхоу',   'Wivenhoe');
+    addCity(lut,    'Уайвенго',   'Wivenhoe');
+    addCity(lut,    'Котор',      'Kotor');
+    addCity(lut,    'Торсхавн',   'Torshavn');
     addCityRaw(lut, 'Орла',       'Orel');
     addCityRaw(lut, 'Орле',       'Orel');
     addCityRaw(lut, 'Химок',      'Khimki');
@@ -87,6 +103,10 @@ function addExtra(lut) {
     addCityRaw(lut, 'Черногория Бар', 'Bar');
     addCityRaw(lut, 'Bar Montenegro', 'Bar');
     addCityRaw(lut, 'Montenegro Bar', 'Bar');
+    addCityRaw(lut, 'Belgrad',    'Belgrade');
+    addCityRaw(lut, 'Genève',     'Geneva');
+    addCityRaw(lut, 'Köln',       'Cologne');
+    addCityRaw(lut, 'Utah',       'Utah');
 }
 
 let cachedLUT = null;
@@ -97,8 +117,12 @@ function genLUT() {
         // Reverse cityData so cities with higher population
         // overwrite cities with lower population
         cityData.data.forEach(city => {
-            if (city.country == 'Russia' || city.name.length > 2) {
-                if (city.country == 'Russia' || city.population > 10000) {
+            if (city.country == 'Russia' || city.name.length >= 3) {
+                if (
+                    city.country == 'Russia'
+                        || city.population > 40000
+                        || (city.population > 15000 && city.country == 'Montenegro')
+                ) {
                     addCity(lut, city.name_ru, city.name);
                 }
                 addCityRaw(lut, city.name, city.name);
@@ -122,4 +146,4 @@ function genLUT() {
 //     { name_ru: 'Нижний Тагил' },
 // ]
 
-export { genLUT };
+export { genLUT, stripAccent };
