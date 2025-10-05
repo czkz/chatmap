@@ -107,6 +107,12 @@ function addExtra(lut) {
     addCityRaw(lut, 'Genève',     'Geneva');
     addCityRaw(lut, 'Köln',       'Cologne');
     addCityRaw(lut, 'Utah',       'Utah');
+    addCityRaw(lut, 'город Мирный', 'Mirnyy');
+    addCityRaw(lut, 'города Мирный','Mirnyy');
+    addCityRaw(lut, 'городе Мирный','Mirnyy');
+    addCityRaw(lut, 'Мирный Якутия','Mirnyy');
+    addCityRaw(lut, 'Мирный Саха',  'Mirnyy');
+    addCityRaw(lut, 'Мирный республика','Mirnyy');
 }
 
 let cachedLUT = null;
