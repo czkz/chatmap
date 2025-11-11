@@ -1,4 +1,4 @@
-export default function() {
+(function() {
     globalThis.cleanup?.reverse().forEach(e => e()), globalThis.cleanup = [];
 
     const MessageExtractor = class {
@@ -45,4 +45,4 @@ export default function() {
     window.addEventListener('message', onMessage);
     cleanup.push(_ => removeEventListener('message', onMessage));
 
-}
+})();
