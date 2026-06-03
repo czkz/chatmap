@@ -40,18 +40,16 @@ export default class {
                     "name": "Astana",
                     "name_ru": "Астана",
                 });
-                sharedData.push({
-                    "name": "Vladibablo",
-                    "lat": "40",
-                    "lng": "-40",
-                    "country": "Russia",
-                    "iso2": "RU",
-                    "iso3": "RUS",
-                    "admin_name": "Vladibablo",
-                    "population": "0",
-                    "name_ru": "Владибабло",
-                    "admin_name_ru": "Владибабло"
-                });
+                sharedData = sharedData.filter(city => ![
+                    'Louga',
+                    'Bata',
+                    'Lae',
+                    'Svobodnyy',
+                    'Etah',
+                    'Montenegro',
+                    'Wooster',
+                    'Queenstown',
+                ].includes(city.name));
                 sharedData.push({
                     "name": "Langhorne",
                     "lat": "40.1774",
@@ -160,15 +158,18 @@ export default class {
                     "name_ru": "Вивенхоу",
                     "admin_name_ru": "Эссекс"
                 });
-                sharedData = sharedData.filter(city => ![
-                    'Louga',
-                    'Bata',
-                    'Lae',
-                    'Svobodnyy',
-                    'Etah',
-                    'Montenegro',
-                    'Wooster',
-                ].includes(city.name));
+                sharedData.push({
+                    "name": "Queenstown",
+                    "lat": "-45.03",
+                    "lng": "168.66",
+                    "country": "New Zealand",
+                    "iso2": "NZ",
+                    "iso3": "NZL",
+                    "admin_name": "Otago",
+                    "population": "32000",
+                    "name_ru": "Квинстаун",
+                    "admin_name_ru": "Отаго"
+                });
             }
             this.data = sharedData;
             return this;

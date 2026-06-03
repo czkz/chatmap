@@ -13,7 +13,6 @@ function decline(word, casei) {
     const indec = {
         'Моа': true,
         'Hue': true,
-        'Vladibablo': true,
         'Orel': true,
     };
     const indeclinable = indec[word] ?? ('оиеую'.split('').includes(word.slice(-1)) ||
@@ -80,6 +79,7 @@ function addExtra(lut) {
     addCity(lut,    'Уайвенго',   'Wivenhoe');
     addCity(lut,    'Котор',      'Kotor');
     addCity(lut,    'Торсхавн',   'Torshavn');
+    addCity(lut,    'Квинстаун',  'Queenstown');
     addCityRaw(lut, 'Орла',       'Orel');
     addCityRaw(lut, 'Орле',       'Orel');
     addCityRaw(lut, 'Химок',      'Khimki');
