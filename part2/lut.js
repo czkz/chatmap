@@ -80,6 +80,13 @@ function addExtra(lut) {
     addCity(lut,    'Котор',      'Kotor');
     addCity(lut,    'Торсхавн',   'Torshavn');
     addCity(lut,    'Квинстаун',  'Queenstown');
+    addCity(lut,    'Хургада',    'Al Ghardaqah');
+    addCity(lut,    'Харгада',    'Al Ghardaqah');
+    addCity(lut,    'Эль-Гурдака','Al Ghardaqah');
+    addCity(lut,    'Эль-Гардака','Al Ghardaqah');
+    addCity(lut,    'Аль-Гурдака','Al Ghardaqah');
+    addCity(lut,    'Эль-Хурдага','Al Ghardaqah');
+    addCity(lut,    'Эль-Хардага','Al Ghardaqah');
     addCityRaw(lut, 'Орла',       'Orel');
     addCityRaw(lut, 'Орле',       'Orel');
     addCityRaw(lut, 'Химок',      'Khimki');
@@ -113,6 +120,7 @@ function addExtra(lut) {
     addCityRaw(lut, 'Мирный Якутия','Mirnyy');
     addCityRaw(lut, 'Мирный Саха',  'Mirnyy');
     addCityRaw(lut, 'Мирный республика','Mirnyy');
+    addCityRaw(lut, 'Hurghada',   'Al Ghardaqah');
 }
 
 let cachedLUT = null;
