@@ -121,6 +121,9 @@ function addExtra(lut) {
     addCityRaw(lut, 'Мирный Саха',  'Mirnyy');
     addCityRaw(lut, 'Мирный республика','Mirnyy');
     addCityRaw(lut, 'Hurghada',   'Al Ghardaqah');
+    addCityRaw(lut, 'Бендеры',    'Bender');
+    addCityRaw(lut, 'Бендеров',   'Bender');
+    addCityRaw(lut, 'Бендерах',   'Bender');
 }
 
 let cachedLUT = null;
