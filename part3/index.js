@@ -8,7 +8,7 @@ export default class {
 
     #cityData = null;
     #viewerData = null;
-    #prevRawData = null;
+    #lastModId = null;
     #chart = null;
     tip = null;
     #newTip = false;
@@ -38,8 +38,9 @@ export default class {
     }
 
     update() {
-        window.rawData = this.#viewerData.generate();
-        if (this.#prevRawData !== rawData) {
+        if (this.#lastModId !== this.#viewerData.modificationId) {
+            this.#lastModId = this.#viewerData.modificationId;
+            window.rawData = this.#viewerData.generate();
             this.#chart.setOption({
                 dataset: {
                     source: window.rawData

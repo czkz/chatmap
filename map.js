@@ -1,15 +1,18 @@
-// import CityData from './CityData';
 import Part1 from './part1/index.js';
 import Part2 from './part2/index.js';
 import Part3 from './part3/index.js';
+import { fetchLiveChatId, fetchTopStream, GoogleApiError } from './part1/api.js';
 
 
-window.part1 = new Part1();
-window.part2 = await new Part2();
-window.part3 = await new Part3();
+const part1 = new Part1();
+const part2 = await new Part2();
+const part3 = await new Part3();
+window.part1 = part1;
+window.part2 = part2;
+window.part3 = part3;
 
 window.bkp = function() {
-    window.open().document.write(part3.backup());
+    window.open().document.writeln(part3.backup());
 };
 
 part1.onNewMessages = function(msgs) {
@@ -20,7 +23,42 @@ part1.onNewMessages = function(msgs) {
         }
     });
 };
-part1.start();
+
+document.getElementById('reset-button').addEventListener('click', () => {
+    localStorage.removeItem('settings');
+    location.reload();
+});
+const { channelId, apiKey } = await new Promise(resolve => {
+    const stored = JSON.parse(localStorage.getItem('settings'));
+    if (stored) { return resolve(stored); }
+    document.getElementById('setup-dialog').showModal();
+    document.getElementById('setup-dialog').addEventListener('submit', () => {
+        const channelId = document.getElementById('channel-id').value;
+        const apiKey = document.getElementById('api-key').value;
+        localStorage.setItem('settings', JSON.stringify({ channelId, apiKey }));
+        resolve({ channelId, apiKey });
+    });
+});
+globalThis.apiKey = apiKey;
+try {
+    const videoId = new URL(location).searchParams.get('v') ?? await fetchTopStream(channelId);
+    console.log(`Selected video https://youtu.be/${videoId}`)
+    const liveChatId = await fetchLiveChatId(videoId);
+    if (liveChatId === undefined) {
+        console.log('Live chat is not available');
+    } else {
+        part1.start(liveChatId);
+    }
+} catch (err) {
+    if (err instanceof GoogleApiError && err.error.details[0].reason == 'API_KEY_INVALID') {
+        alert(err.error.message);
+        localStorage.removeItem('settings');
+        location.reload();
+    } else {
+        console.log('Initialization failed');
+    }
+    throw err;
+}
 
 
 const update = {
@@ -55,10 +93,13 @@ window.addEventListener('wheel', () => {
 
 update.enable();
 
+// import CityData from './CityData.js';
 // const cities = await new CityData();
-//
 // const addRandomCities = () => {
-//     part3.addViewer(cities.randomCity(5).name);
-//     setTimeout(addRandomCities, Math.random() * 3000);
+//     const arr = Array.from(new Array(10)).map(
+//         () => ({ text: `Hello from ${cities.randomCity(30).name}` })
+//     );
+//     part1.onNewMessages(arr);
+//     setTimeout(addRandomCities, 4000 + Math.random() * 1000);
 // };
 // setTimeout(addRandomCities, 2000);

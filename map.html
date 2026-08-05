@@ -4,39 +4,28 @@
 <head>
   <meta charset="utf-8">
   <title>Map</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
-    body {
-      background-color: black;
-      color: white;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      cursor: none;
-    }
-    #circle-cursor {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: white;
-      pointer-events: none;
-      mix-blend-mode: difference;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      transition:opacity 500ms;
-    }
-    #chart-container {
-      position: relative;
-      height: 100vh;
-      overflow: hidden;
-    }
-  </style>
+  <link rel="stylesheet" href="map.css">
+  <link rel="shortcut icon" href="data:,">
 </head>
 <body>
+  <dialog id="setup-dialog" closedby="none">
+    <form method="dialog">
+      <div>
+        <label for="channel-id">Channel ID: </label>
+        <input type="text" name="channel-id" id="channel-id" required />
+      </div>
+      <div>
+        <label for="api-key">Google API key: </label>
+        <input type="password" name="api-key" id="api-key" required />
+      </div>
+      <div>
+        <input type="submit" value="Save" />
+      </div>
+    </form>
+  </dialog>
   <div id="chart-container"></div>
   <div id="circle-cursor"></div>
+  <button id="reset-button">Reset</button>
   <script>
     const cursor = document.getElementById("circle-cursor");
     document.addEventListener("mousemove", e => {
