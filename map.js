@@ -1,7 +1,7 @@
 import Part1 from './part1/index.js';
 import Part2 from './part2/index.js';
 import Part3 from './part3/index.js';
-import { fetchLiveChatId, fetchTopStream, GoogleApiError } from './part1/api.js';
+import { fetchLiveStreamingDetails, fetchTopStream, GoogleApiError } from './part1/api.js';
 
 
 const part1 = new Part1();
@@ -41,14 +41,23 @@ const { channelId, apiKey } = await new Promise(resolve => {
 });
 globalThis.apiKey = apiKey;
 try {
-    const videoId = new URL(location).searchParams.get('v') ?? await fetchTopStream(channelId);
-    console.log(`Selected video https://youtu.be/${videoId}`)
-    const liveChatId = await fetchLiveChatId(videoId);
-    if (liveChatId === undefined) {
-        console.log('Live chat is not available');
-    } else {
+    await async function startPart1() {
+        const videoId = new URL(location).searchParams.get('v') ?? await fetchTopStream(channelId);
+        console.log(`Selected video https://youtu.be/${videoId}`);
+        const liveStreamingDetails = await fetchLiveStreamingDetails(videoId);
+        const liveChatId = liveStreamingDetails?.activeLiveChatId;
+        if (liveChatId === undefined) {
+            console.log('Live chat is not available');
+            return;
+        }
+        const startTime = Date.parse(liveStreamingDetails.scheduledStartTime);
+        const untilStart = startTime - Date.now();
+        if (untilStart > 10 * 60 * 1000) {
+            console.log(`Broadcast scheduled in ${Math.round(untilStart / 60_000)}m, waiting`);
+            await new Promise(r => setTimeout(r, untilStart - 10 * 60 * 1000));
+        }
         part1.start(liveChatId);
-    }
+    }();
 } catch (err) {
     if (err instanceof GoogleApiError && err.error.details[0].reason == 'API_KEY_INVALID') {
         alert(err.error.message);

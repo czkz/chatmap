@@ -31,9 +31,9 @@ export async function apiFetchRetry(path, params) {
     }
 }
 
-export async function fetchLiveChatId(videoId) {
+export async function fetchLiveStreamingDetails(videoId) {
     const res = await apiFetch('videos', { part: 'liveStreamingDetails', id: videoId });
-    return res.items[0].liveStreamingDetails?.activeLiveChatId;
+    return res.items[0].liveStreamingDetails;
 }
 
 export async function fetchTopStream(channelId) {
