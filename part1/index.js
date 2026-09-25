@@ -25,7 +25,7 @@ export default class {
                     text: item.snippet.textMessageDetails.messageText,
                 }))
                 .forEach(msg => setTimeout(() => this.onNewMessages?.([msg]), Math.random() * this.#lastDelay));
-            const delay = Math.max(response.pollingIntervalMillis, 20000);
+            const delay = Math.max(response.pollingIntervalMillis, 10000);
             this.#lastDelay = delay;
             await new Promise(r => setTimeout(r, delay));
         } while (this.#nextPageToken && this.#enabled);
